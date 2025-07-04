@@ -21,6 +21,6 @@ Route::middleware(['auth.custom'])->group(function () {
 
     // Route::get('/home', [TaskController::class, 'home'])->name('home');
     Route::get('/tugas', [TaskController::class, 'calendar'])->name('calendar');
-    Route::post('/tugas', [TaskController::class, 'store']);
+    Route::post('/tugas', [TaskController::class, 'store'])->name('tugas.store');
     Route::get('/akun', [AuthController::class, 'profile'])->name('akun');
 });

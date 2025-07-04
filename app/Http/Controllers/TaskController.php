@@ -32,4 +32,36 @@ class TaskController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function calendar()
+    {
+        $userId = session('user_id');
+
+        // Ambil semua tugas user saat ini, urut berdasarkan deadline
+        $tasks = DB::table('tasks')
+            ->where('user_id', $userId)
+            ->orderBy('deadline')
+            ->get();
+
+        return view('tugas', compact('tasks'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'    => 'required',
+            'priority' => 'required|in:Tinggi,Sedang,Rendah',
+            'deadline' => 'required|date',
+        ]);
+
+        DB::table('tasks')->insert([
+            'user_id'   => session('user_id'),
+            'title'     => $request->title,
+            'priority'  => $request->priority,
+            'deadline'  => $request->deadline,
+            'created_at'=> now(),
+        ]);
+
+        return redirect()->route('calendar')->with('success', 'Tugas berhasil ditambahkan.');
+    }
 }
