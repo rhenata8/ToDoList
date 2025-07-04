@@ -17,6 +17,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.custom'])->group(function () {
     Route::get('/home', [TaskController::class, 'home'])->name('home');
+    Route::post('/task/{id}/status', [TaskController::class, 'updateStatus'])->name('task.status');
+
+    // Route::get('/home', [TaskController::class, 'home'])->name('home');
     Route::get('/tugas', [TaskController::class, 'calendar'])->name('calendar');
     Route::post('/tugas', [TaskController::class, 'store']);
     Route::get('/akun', [AuthController::class, 'profile'])->name('akun');
